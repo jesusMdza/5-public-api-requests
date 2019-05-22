@@ -1,13 +1,5 @@
-const searchContainer = document.querySelector('.search-container');
 const gallery = document.querySelector('#gallery');
-// const modal;
-// const cardDiv = document.createElement('div');
-// const imgContainer = document.createElement('div');
-// const cardInfoContainer = document.createElement('div');
-
-// cardDiv.classList.add('card');
-// imgContainer.classList.add('card-img-container');
-// cardInfoContainer.classList.add('card-info-container');
+const searchContainer = document.querySelector('.search-container');
 
 function fetchData(url) {
     fetch(url)
@@ -28,35 +20,133 @@ function displayEmployees(data) {
             </div>
         </div>
     `).join('');
-    gallery.innerHTML = html;
+    gallery.insertAdjacentHTML('beforeend', html);
+    console.log(data);
+    appendModal(data);
+    searchBar();
 }
 
-function toggleModal() {
-    const gallery = document.querySelectorAll('.card');
-    console.log(gallery);
+function appendModal(data) {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => card.addEventListener('click', (event) => {
+        const cardName = card.querySelector('h3').textContent;
+        console.log(cardName);
+        data.map(employee => {
+            if (cardName === `${employee.name.first} ${employee.name.last}`) {
+                console.log(employee);
+                const html = 
+                    `<div class="modal-container">
+                        <div class="modal">
+                        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+                        <div class="modal-info-container">
+                            <img class="modal-img" src="${employee.picture.large}" alt="profile picture">
+                            <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
+                            <p class="modal-text">${employee.email}</p>
+                            <p class="modal-text cap">${employee.location.city}</p>
+                            <hr>                            <p class="modal-text">${employee.cell}</p>
+                            <p class="modal-text cap">${employee.location.street}, ${employee.location.state} ${employee.location.postcode}</p>
+                            <p class="modal-text">Birthday: ${employee.dob.date}</p>
+                        </div>
 
-    //     const modal = data.map(employee => `
-    //     <div class="modal-container">
-    //     <div class="modal">
-    //         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-    //         <div class="modal-info-container">
-    //             <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-    //             <h3 id="name" class="modal-name cap">name</h3>
-    //             <p class="modal-text">email</p>
-    //             <p class="modal-text cap">city</p>
-    //             <hr>
-    //             <p class="modal-text">(555) 555-5555</p>
-    //             <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-    //             <p class="modal-text">Birthday: 10/21/2015</p>
-    //         </div>
-    //     </div>
-    // `).join('');
-    // gallery.innerHTML = modal;
+                        <div class="modal-btn-container">
+                            <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                            <button type="button" id="modal-next" class="modal-next btn">Next</button>
+                        </div>
+                    </div>`;
+                document.body.insertAdjacentHTML('afterbegin', html);
+                reformatBirthday();
+                closeModal();
+                modalToggle();
+            }
+        });
+    }));
 }
 
+function reformatBirthday() {
+    const modalInfoContainer = document.querySelector('.modal-info-container');
+    const lastParagraph = modalInfoContainer.lastElementChild;
+    const birthday = lastParagraph.textContent.replace(/T\S*/, '');
+    const birthdayReformatted = birthday.replace(/(\d{4})-(\d{2})-(\d{2})/, '$2/$3/$1');
+    lastParagraph.innerHTML = `${birthdayReformatted}`;
+}
 
-fetchData('https://randomuser.me/api/?results=12', displayEmployees);
-toggleModal();
+function modalToggle() {
+    const cards = document.querySelectorAll('.card');
+    const firstIndex = cards.length - cards.length;
+    const lastIndex = cards.length - 1;
+    const prevButton = document.querySelector('#modal-prev');
+    const nextButton = document.querySelector('#modal-next');
+    let total = 0;
+    cards.forEach(div => {
+        div.addEventListener('click', () => {
+            console.log('clicked');
+        });
+    });
+    // for (let i = 0; i < array.length; i++) {
+    //     const card = array[i];
+    //     if (array.indexOf(card) >= 9) {
+    //         console.log(card);
+    //     }
+    // }
+    // console.log('Employee Index: ' + employeeIndex);
+    // console.log(cards);
+    // console.log('first ' + firstIndex);
+    // console.log('last ' + lastIndex);
+
+    // prevButton.addEventListener('click', () => {
+    //     if (cards[firstIndex]) {
+    //         cards[employeeIndex].parentNode.lastElementChild.click();
+    //     } else {
+    //         cards[employeeIndex].previousElementSibling.click();
+    //     }
+    // });
+
+    // nextButton.addEventListener('click', () => {
+    //     if (cards[lastIndex]) {
+    //         cards[employeeIndex].parentNode.firstElementChild.click();
+    //     } else {
+    //         cards[employeeIndex].nextElementSibling.click();
+    //     }
+    // });
+}
+
+function closeModal() {
+    const modal = document.querySelector('.modal-container');
+
+    modal.addEventListener('click', (event) => {
+        const nodeName = event.target.nodeName;
+        if (nodeName === 'STRONG' || nodeName === 'BUTTON') {
+            modal.parentNode.removeChild(modal);
+        }
+    });
+}
+
+function searchBar() {
+    const searchHTML = `
+    <form action="#" method="get">
+        <input type="search" id="search-input" class="search-input" placeholder="Search...">
+        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>`;
+    searchContainer.insertAdjacentHTML('afterbegin', searchHTML);
+
+    const searchField = document.querySelector('#search-input');
+    
+    searchField.addEventListener('keyup', () => {
+        const cards = document.querySelectorAll('.card');
+        const userInput = searchField.value.toLowerCase();
+        cards.forEach(card => {
+            const cardName = card.querySelector('h3').textContent;
+            if (cardName.includes(userInput)) {
+                card.style.display = 'flex';
+            } else {
+                card.parentNode.removeChild(card);
+            }
+        });
+    });
+}
+
+fetchData('https://randomuser.me/api/?results=12&nat=US', displayEmployees);
+
 
 
 
