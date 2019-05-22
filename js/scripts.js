@@ -79,7 +79,7 @@ function modalToggle() {
     let total = 0;
     cards.forEach(div => {
         div.addEventListener('click', () => {
-            console.log('clicked');
+            console.log('clicked paragraph');
         });
     });
     // for (let i = 0; i < array.length; i++) {
