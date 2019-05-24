@@ -1,3 +1,13 @@
+/************************************* 
+FSJS TechDegree Project - Public API Requests
+
+
+
+- This project is attempting to receive an "Exceeds Expectations" grade.
+- CSS changes noted in ReadMe file
+
+
+*************************************/
 const gallery = document.querySelector('#gallery');
 const searchContainer = document.querySelector('.search-container');
 
