@@ -29,6 +29,7 @@ function displayEmployees(data) {
 function appendModal(data) {
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => card.addEventListener('click', (event) => {
+        const cardSelect = card;
         const cardName = card.querySelector('h3').textContent;
         console.log(cardName);
         data.map(employee => {
@@ -56,7 +57,7 @@ function appendModal(data) {
                 document.body.insertAdjacentHTML('afterbegin', html);
                 reformatBirthday();
                 closeModal();
-                modalToggle();
+                modalToggle(cardSelect);
             }
         });
     }));
@@ -67,47 +68,33 @@ function reformatBirthday() {
     const lastParagraph = modalInfoContainer.lastElementChild;
     const birthday = lastParagraph.textContent.replace(/T\S*/, '');
     const birthdayReformatted = birthday.replace(/(\d{4})-(\d{2})-(\d{2})/, '$2/$3/$1');
-    lastParagraph.innerHTML = `${birthdayReformatted}`;
+    lastParagraph.innerHTML = birthdayReformatted;
 }
 
-function modalToggle() {
+function modalToggle(cardSelect) {
     const cards = document.querySelectorAll('.card');
-    const firstIndex = cards.length - cards.length;
-    const lastIndex = cards.length - 1;
     const prevButton = document.querySelector('#modal-prev');
     const nextButton = document.querySelector('#modal-next');
-    let total = 0;
-    cards.forEach(div => {
-        div.addEventListener('click', () => {
-            console.log('clicked paragraph');
-        });
+    const firstIndex = cards.length - cards.length;
+    const lastIndex = cards.length - 1;
+    let array = [];
+    cards.forEach(card => array.push(card));
+
+    prevButton.addEventListener('click', () => {
+        if (array.indexOf(cardSelect) === firstIndex) {
+            cards[lastIndex].click();
+        } else {
+            cardSelect.previousElementSibling.click();
+        }
     });
-    // for (let i = 0; i < array.length; i++) {
-    //     const card = array[i];
-    //     if (array.indexOf(card) >= 9) {
-    //         console.log(card);
-    //     }
-    // }
-    // console.log('Employee Index: ' + employeeIndex);
-    // console.log(cards);
-    // console.log('first ' + firstIndex);
-    // console.log('last ' + lastIndex);
 
-    // prevButton.addEventListener('click', () => {
-    //     if (cards[firstIndex]) {
-    //         cards[employeeIndex].parentNode.lastElementChild.click();
-    //     } else {
-    //         cards[employeeIndex].previousElementSibling.click();
-    //     }
-    // });
-
-    // nextButton.addEventListener('click', () => {
-    //     if (cards[lastIndex]) {
-    //         cards[employeeIndex].parentNode.firstElementChild.click();
-    //     } else {
-    //         cards[employeeIndex].nextElementSibling.click();
-    //     }
-    // });
+    nextButton.addEventListener('click', () => {
+        if (array.indexOf(cardSelect) === lastIndex) {
+            cards[firstIndex].click();
+        } else {
+            cardSelect.nextElementSibling.click();
+        }
+    });
 }
 
 function closeModal() {
