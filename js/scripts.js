@@ -48,7 +48,7 @@ function appendModal(data) {
                 const html = 
                     `<div class="modal-container">
                         <div class="modal">
-                        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+                        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong></strong></button>
                         <div class="modal-info-container">
                             <img class="modal-img" src="${employee.picture.large}" alt="profile picture">
                             <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
@@ -121,8 +121,8 @@ function closeModal() {
 function searchBar() {
     const searchHTML = `
     <form action="#" method="get">
+        <span><img src="Images/search-icon.png" class="search-icon"></img></span>
         <input type="search" id="search-input" class="search-input" placeholder="Search...">
-        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
     </form>`;
     searchContainer.insertAdjacentHTML('afterbegin', searchHTML);
 
@@ -131,20 +131,33 @@ function searchBar() {
     searchField.addEventListener('keyup', () => {
         const cards = document.querySelectorAll('.card');
         const userInput = searchField.value.toLowerCase();
+        const employeeOutput = [];
         cards.forEach(card => {
             const cardName = card.querySelector('h3').textContent;
             if (cardName.includes(userInput)) {
                 card.style.display = 'flex';
+                employeeOutput.push(card);
             } else {
                 card.parentNode.removeChild(card);
             }
         });
+       
+        if (employeeOutput.length === 0) {
+            appendError();
+        }
     });
 }
 
+function appendError() {
+    const error = `
+    <div>
+        <h1 style="color:rgba(50, 50, 50, 0.9)">No Employees Found</h1>
+        <h3 style="color:rgba(50, 50, 50, 0.9)">Refresh the page for a new list of employees</h3>
+    </div>`;
+    gallery.innerHTML = error;
+}
+
 fetchData('https://randomuser.me/api/?results=12&nat=US', displayEmployees);
-
-
 
 
 
