@@ -233,6 +233,6 @@ header h1 {
 
 @media (max-width: 768px) {
     .search-input {
-        width: 15em;
+        width: 16em;
     }
 }
