@@ -2,7 +2,7 @@
    Public API Request
 ======================================== */
 
-@import url('https://fonts.googleapis.com/css?family=Montserrat:200&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400&display=swap');
 
 * {
 	box-sizing: border-box;
@@ -92,6 +92,7 @@ header h1 {
     width: 80px;
     margin: 10px 15px auto 10px;
     border-radius: 50%;
+    border: 1px solid rgb(93, 93, 93);
 }
 
 .card-info-container {
@@ -104,7 +105,6 @@ header h1 {
 
 .card-text {
     font-size: 0.9em;
-    color: #000;
     margin: 7px auto;
     transition: .4s ease-out;
 }
@@ -143,21 +143,23 @@ header h1 {
 
 .modal-close-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    width: 3em;
+    height: 3em;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
     color: #000;
     background: #fff;
     outline: none;
     border-radius: 50%;
     padding: 10px;
-    border: 1px solid rgba(50, 50, 50, 0.3);
 }
 
 .modal-img {
     width: 150px;
     margin-top: 35px;
     border-radius: 50%;
+    border: 1px solid rgb(61, 61, 61);
 }
 
 .modal-name {
@@ -165,7 +167,6 @@ header h1 {
 }
 
 .modal-text {
-    color: rgba(50, 50, 50, 0.7);
     margin: 10px;
 }
 
@@ -183,23 +184,21 @@ header h1 {
     width: 95%;
     max-width: 420px;
     padding: 10px 15px 15px;;
-    margin: 10px auto auto;
+    margin: 20px auto auto;
     background: rgba(255, 255, 255, 1);
 }
 
-.modal-btn-container .btn {
-    display: inline-block;
+.modal-btn-container #modal-prev {
+    transform: rotate(180deg);
+}
+
+#modal-prev,
+#modal-next {
     cursor: pointer;
-    font-size: 0.85em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.9);
-    padding: 0.75em 1.5em;
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 0.35em;
-    transition: .4s ease-out;
-    outline: none;
-  }
-  
+    width: 2.2em;
+    height: 2.2em;
+}
+
 
 /* ===================================== 
    Media Queries
@@ -229,5 +228,11 @@ header h1 {
 
     .modal {
         margin-top: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-input {
+        width: 20em;
     }
 }
