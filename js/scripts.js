@@ -31,7 +31,6 @@ function displayEmployees(data) {
         </div>
     `).join('');
     gallery.insertAdjacentHTML('beforeend', html);
-    console.log(data);
     appendModal(data);
     searchBar();
 }
@@ -41,10 +40,8 @@ function appendModal(data) {
     cards.forEach(card => card.addEventListener('click', (event) => {
         const cardSelect = card;
         const cardName = card.querySelector('h3').textContent;
-        console.log(cardName);
         data.map(employee => {
             if (cardName === `${employee.name.first} ${employee.name.last}`) {
-                console.log(employee);
                 const html = 
                     `<div class="modal-container">
                         <div class="modal">
@@ -85,7 +82,6 @@ function modalToggle(cardSelect) {
     const cards = document.querySelectorAll('.card');
     const prevButton = document.querySelector('#modal-prev');
     const nextButton = document.querySelector('#modal-next');
-    console.log(nextButton);
     const firstIndex = cards.length - cards.length;
     const lastIndex = cards.length - 1;
     let array = [];
