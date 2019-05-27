@@ -64,8 +64,6 @@ function appendModal(data) {
                         </div>
 
                         <div class="modal-btn-container">
-                            <img src="Images/arrow.png" id="modal-prev"></img>
-                            <img src="Images/arrow.png" id="modal-next"></img>
                         </div>
                     </div>`;
                 document.body.insertAdjacentHTML('afterbegin', html);
