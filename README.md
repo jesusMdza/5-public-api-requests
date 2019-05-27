@@ -6,8 +6,8 @@ The url comes from the randomuser API which gives a list of random employees wit
 Each employee is placed within a card on the page. Once a card is clicked, a modal is displayed with more details about that employee.
 
 For extra credit, I've added two features to the project along with styling the old premade project.
-First, I attached functional arrows on each modal which will cycle through the current employees on the page.
-Second, a search bar was added to the page which will filter through all the current employees by the users key input.
+First feature includes functional left and right arrows on each modal which will cycle through the current employees on the page.
+Second feature is a search bar that filters through all the current employees on the page by the users key input.
 
 
 CSS Changes:
