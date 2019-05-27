@@ -64,8 +64,13 @@ function appendModal(data) {
                         </div>
 
                         <div class="modal-btn-container">
+<<<<<<< HEAD
                             <img src="Images/hello.png" id="modal-prev"></img>
                             <img src="Images/hello.png" id="modal-next"></img>
+=======
+                            <img src="Images/arrow.png" id="modal-prev"></img>
+                            <img src="Images/arrow.png" id="modal-next"></img>
+>>>>>>> parent of 9dd18b8... test
                         </div>
                     </div>`;
                 document.body.insertAdjacentHTML('afterbegin', html);
