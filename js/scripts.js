@@ -11,12 +11,14 @@ FSJS TechDegree Project - Public API Requests
 const gallery = document.querySelector('#gallery');
 const searchContainer = document.querySelector('.search-container');
 
+// A fetch call is made which then parses and passes the response in "displayEmployees"
 function fetchData(url) {
     fetch(url)
         .then(response => response.json())
         .then(data => displayEmployees(data.results))
 }
 
+// Transforms each object from "data" into html and inserts into gallery div
 function displayEmployees(data) {
     const html = data.map(employee => `
         <div class="card">
@@ -35,8 +37,13 @@ function displayEmployees(data) {
     searchBar();
 }
 
+// Appends a modal to the browser whenever a "card" is clicked on
 function appendModal(data) {
     const cards = document.querySelectorAll('.card');
+    
+    // Once "card" is clicked on, take the name of employee on "card" and check if it matches in the list of objects from "data"
+    // If match, transform matched object into html and append to the body of page
+    // Pass selected card (cardSelect) to "modalToggle"
     cards.forEach(card => card.addEventListener('click', (event) => {
         const cardSelect = card;
         const cardName = card.querySelector('h3').textContent;
@@ -78,6 +85,7 @@ function reformatBirthday() {
     lastParagraph.innerHTML = birthdayReformatted;
 }
 
+// Toggles through visible employee "card" divs depending on what button (prev/next) the user clicks on the current modal
 function modalToggle(cardSelect) {
     const cards = document.querySelectorAll('.card');
     const prevButton = document.querySelector('#modal-prev');
@@ -87,6 +95,8 @@ function modalToggle(cardSelect) {
     let array = [];
     cards.forEach(card => array.push(card));
 
+    // Clicks on previous element "card" from the current selected "card"
+    // If button is clicked while current selected "card" is the first "card", click the last displayed "card"
     prevButton.addEventListener('click', () => {
         if (array.indexOf(cardSelect) === firstIndex) {
             cards[lastIndex].click();
@@ -95,6 +105,8 @@ function modalToggle(cardSelect) {
         }
     });
 
+    // Clicks on next element "card" from the current selected "card"
+    // If button is clicked while current selected "card" is the last "card", click the first displayed "card"
     nextButton.addEventListener('click', () => {
         if (array.indexOf(cardSelect) === lastIndex) {
             cards[firstIndex].click();
@@ -104,17 +116,19 @@ function modalToggle(cardSelect) {
     });
 }
 
+// Close modal when images (left/right arrow, X) are clicked
 function closeModal() {
     const modal = document.querySelector('.modal-container');
 
     modal.addEventListener('click', (event) => {
         const nodeName = event.target.nodeName;
-        if (nodeName === 'STRONG' || nodeName === 'IMG') {
+        if (nodeName === 'IMG') {
             modal.parentNode.removeChild(modal);
         }
     });
 }
 
+// Appends search bar html into the "searchContainer"
 function searchBar() {
     const searchHTML = `
     <form action="#" method="get">
@@ -123,8 +137,9 @@ function searchBar() {
     </form>`;
     searchContainer.insertAdjacentHTML('afterbegin', searchHTML);
 
+    // If letter from user matches with any employee name from "card" div, display that "card"
+    // If not, remove "card"
     const searchField = document.querySelector('#search-input');
-    
     searchField.addEventListener('keyup', () => {
         const cards = document.querySelectorAll('.card');
         const userInput = searchField.value.toLowerCase();
@@ -145,6 +160,7 @@ function searchBar() {
     });
 }
 
+// Append error html to gallery
 function appendError() {
     const error = `
     <div>
