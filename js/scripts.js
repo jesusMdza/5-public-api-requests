@@ -46,7 +46,7 @@ function appendModal(data) {
     // Pass selected card (cardSelect) to "modalToggle"
     cards.forEach(card => card.addEventListener('click', (event) => {
         const cardSelect = card;
-        const cardName = card.querySelector('h3').textContent;
+        const cardName = card.querySelector('h3').textContent.toLowerCase();
         data.map(employee => {
             if (cardName === `${employee.name.first} ${employee.name.last}`) {
                 const html = 
