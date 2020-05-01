@@ -16,6 +16,7 @@ function fetchData(url) {
     fetch(url)
         .then(response => response.json())
         .then(data => displayEmployees(data.results))
+        .catch(err => console.log(err))
 }
 
 // Transforms each object from "data" into html and inserts into gallery div
@@ -46,7 +47,7 @@ function appendModal(data) {
     // Pass selected card (cardSelect) to "modalToggle"
     cards.forEach(card => card.addEventListener('click', (event) => {
         const cardSelect = card;
-        const cardName = card.querySelector('h3').textContent.toLowerCase();
+        const cardName = card.querySelector('h3').textContent;
         data.map(employee => {
             if (cardName === `${employee.name.first} ${employee.name.last}`) {
                 const html = 
@@ -69,6 +70,7 @@ function appendModal(data) {
                         </div>
                     </div>`;
                 document.body.insertAdjacentHTML('afterbegin', html);
+                console.log(html);
                 reformatBirthday();
                 closeModal();
                 modalToggle(cardSelect);
@@ -145,7 +147,7 @@ function searchBar() {
         const userInput = searchField.value.toLowerCase();
         const employeeOutput = [];
         cards.forEach(card => {
-            const cardName = card.querySelector('h3').textContent;
+            const cardName = card.querySelector('h3').textContent.toLowerCase();
             if (cardName.includes(userInput)) {
                 card.style.display = 'flex';
                 employeeOutput.push(card);
